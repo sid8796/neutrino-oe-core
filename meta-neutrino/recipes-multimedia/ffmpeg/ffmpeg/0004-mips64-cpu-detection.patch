@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/configure
 +++ b/configure
 @@ -6008,17 +6008,10 @@ elif enabled mips; then

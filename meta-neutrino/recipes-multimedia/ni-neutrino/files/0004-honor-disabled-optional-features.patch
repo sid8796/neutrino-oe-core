@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 From: Formuler F3 bring-up
 Subject: [PATCH] configure: honor disabled optional display and PiP features
 

@@ -2,6 +2,9 @@
  os_dep/linux/rtw_cfgvendor.c | 34 +++++++++++++++++-----------------
  1 file changed, 17 insertions(+), 17 deletions(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/os_dep/linux/rtw_cfgvendor.c b/os_dep/linux/rtw_cfgvendor.c
 index c2ccee6..e8b33b6 100644
 --- a/os_dep/linux/rtw_cfgvendor.c

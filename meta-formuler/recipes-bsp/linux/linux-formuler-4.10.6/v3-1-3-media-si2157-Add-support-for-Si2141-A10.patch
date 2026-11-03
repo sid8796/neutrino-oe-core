@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/tuners/si2157.c b/drivers/media/tuners/si2157.c
 index 57b250847cd3..e35b1faf0ddc 100644
 --- a/drivers/media/tuners/si2157.c

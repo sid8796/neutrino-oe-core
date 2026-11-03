@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [distribution compatibility policy]
+
 diff --git a/apps/openssl.cnf b/apps/openssl.cnf
 index 03330e0..8f9691c 100644
 --- a/apps/openssl.cnf

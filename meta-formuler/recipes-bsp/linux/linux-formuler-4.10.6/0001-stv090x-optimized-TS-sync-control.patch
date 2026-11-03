@@ -9,6 +9,8 @@ https://github.com/Taapat/driver/commit/b831c1a22b96ece05d0af1cc1e55d5e34d2ca13b
 stv090x: optimized TS sync control.
 https://github.com/Taapat/driver/commit/f2cacf05651efe48bb5abb02df94646a0d712362
 
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/dvb-frontends/stv090x.c b/drivers/media/dvb-frontends/stv090x.c
 index 12fd3d0..396e0ab 100644
 --- a/drivers/media/dvb-frontends/stv090x.c

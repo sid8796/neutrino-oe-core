@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/src/twisted/web/http.py
 +++ b/src/twisted/web/http.py
 @@ -1229,7 +1229,7 @@ class Request:

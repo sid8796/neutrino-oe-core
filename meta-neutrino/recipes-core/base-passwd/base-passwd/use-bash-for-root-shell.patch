@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [distribution compatibility policy]
+
 --- a/passwd.master
 +++ b/passwd.master
 @@ -1,4 +1,4 @@

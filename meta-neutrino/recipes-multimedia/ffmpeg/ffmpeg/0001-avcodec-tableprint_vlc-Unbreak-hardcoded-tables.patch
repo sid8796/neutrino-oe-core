@@ -12,6 +12,9 @@ Signed-off-by: Andreas Rheinhardt <andreas.rheinhardt@outlook.com>
  libavcodec/tableprint_vlc.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/libavcodec/tableprint_vlc.h b/libavcodec/tableprint_vlc.h
 index b97c1f9cfb..e42bf08a71 100644
 --- a/libavcodec/tableprint_vlc.h

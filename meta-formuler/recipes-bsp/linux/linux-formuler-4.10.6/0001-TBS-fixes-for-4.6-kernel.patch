@@ -9,6 +9,8 @@ Remove TBS5921 because it uses tda10071_config that is unavailable.
 Driver should use I2C platform data now in order to load tda10071.
 More info: https://patchwork.linuxtv.org/patch/30472/
 
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/usb/dvb-usb/tbs-usb.c b/drivers/media/usb/dvb-usb/tbs-usb.c
 index f142be3..98347c9 100644
 --- a/drivers/media/usb/dvb-usb/tbs-usb.c

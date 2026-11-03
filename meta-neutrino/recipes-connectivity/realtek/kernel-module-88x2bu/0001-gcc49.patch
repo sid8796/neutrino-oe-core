@@ -2,6 +2,9 @@
  Makefile | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/Makefile b/Makefile
 index e8a63de..a6b3fd7 100755
 --- a/Makefile

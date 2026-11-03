@@ -2,6 +2,9 @@
  include/ieee80211.h | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/include/ieee80211.h b/include/ieee80211.h
 index 7a50a07..84aad12 100644
 --- a/include/ieee80211.h

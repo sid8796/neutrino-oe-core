@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/libavformat/mpegts.c
 +++ b/libavformat/mpegts.c
 @@ -1037,10 +1037,12 @@ static int new_pes_packet(PESContext *pes, AVPacket *pkt)

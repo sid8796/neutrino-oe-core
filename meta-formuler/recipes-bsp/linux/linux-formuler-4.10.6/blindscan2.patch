@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/dvb-frontends/stv090x.c b/drivers/media/dvb-frontends/stv090x.c
 index ce99b9d..0b59a1f 100644
 --- a/drivers/media/dvb-frontends/stv090x.c

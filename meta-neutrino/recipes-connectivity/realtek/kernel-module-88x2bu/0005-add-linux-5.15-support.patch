@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/core/rtw_br_ext.c b/core/rtw_br_ext.c
 index 9a0effd..d2da04e 100644
 --- a/core/rtw_br_ext.c

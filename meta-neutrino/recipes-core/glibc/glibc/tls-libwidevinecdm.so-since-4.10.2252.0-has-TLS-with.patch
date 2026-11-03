@@ -10,6 +10,9 @@ Subject: [PATCH] tls: libwidevinecdm.so: since 4.10.2252.0 has TLS with
  elf/dl-tls.c | 5 +++++
  1 file changed, 5 insertions(+)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/elf/dl-tls.c b/elf/dl-tls.c
 index 093cdddb..7314c2f9 100644
 --- a/elf/dl-tls.c

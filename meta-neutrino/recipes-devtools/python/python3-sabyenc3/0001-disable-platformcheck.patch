@@ -7,6 +7,9 @@ Subject: [PATCH] disable platformcheck
  setup.py | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/setup.py b/setup.py
 index fd3aa6b..91945db 100644
 --- a/setup.py

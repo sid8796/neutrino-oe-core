@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/setup.py b/setup.py
 index b7ed54b..2ed424a 100644
 --- a/setup.py

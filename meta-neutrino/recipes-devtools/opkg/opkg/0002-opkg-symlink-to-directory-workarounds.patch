@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/libopkg/opkg_install.c b/libopkg/opkg_install.c
 index f778348..4dab4d5 100644
 --- a/libopkg/opkg_install.c

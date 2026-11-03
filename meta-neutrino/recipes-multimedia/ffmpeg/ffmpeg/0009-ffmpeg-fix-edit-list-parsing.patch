@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/libavformat/mov.c
 +++ b/libavformat/mov.c
 @@ -3943,8 +3943,10 @@ static void mov_fix_index(MOVContext *mov, AVStream *st)

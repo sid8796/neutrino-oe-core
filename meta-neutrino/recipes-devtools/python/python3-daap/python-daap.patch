@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- python-daap-0.7.1/daap.py	2007-09-10 20:35:45.000000000 +0200
 +++ python-daap-0.7.1/daap.py	2010-11-03 19:39:09.000000000 +0100
 @@ -417,18 +417,20 @@

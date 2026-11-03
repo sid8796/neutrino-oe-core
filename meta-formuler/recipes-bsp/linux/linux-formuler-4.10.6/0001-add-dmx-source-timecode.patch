@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/include/uapi/linux/dvb/dmx.h b/include/uapi/linux/dvb/dmx.h
 index b2a9ad8..e791d4c 100644
 --- a/include/uapi/linux/dvb/dmx.h

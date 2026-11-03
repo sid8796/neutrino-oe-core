@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/libavcodec/dxva2.c
 +++ b/libavcodec/dxva2.c
 @@ -777,16 +777,18 @@ unsigned ff_dxva2_get_surface_index(const AVCodecContext *avctx,

@@ -7,6 +7,9 @@ Subject: [PATCH] Add av_stream_get_first_dts for Chromium
 
 Rebased against ffmpeg 6.1.1
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/libavformat/avformat.h b/libavformat/avformat.h
 index 9e7eca0..3b1d171 100644
 --- a/libavformat/avformat.h

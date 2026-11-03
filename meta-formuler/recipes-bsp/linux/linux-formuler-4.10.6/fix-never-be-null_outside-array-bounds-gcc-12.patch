@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
 index bd791e4..034cfcb
 --- a/include/linux/mmzone.h

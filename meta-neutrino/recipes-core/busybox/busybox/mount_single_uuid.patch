@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 Index: busybox-1.18.5/util-linux/mount.c
 ===================================================================
 --- busybox-1.18.5.orig/util-linux/mount.c

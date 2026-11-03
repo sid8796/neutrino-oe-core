@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/src/pycountry/__init__.py
 +++ b/src/pycountry/__init__.py
 @@ -6,16 +6,10 @@ import unicodedata

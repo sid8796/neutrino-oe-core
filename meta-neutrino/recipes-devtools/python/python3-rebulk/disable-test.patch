@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/setup.py	2021-11-05 00:09:22.000000000 +0100
 +++ b/setup.py	2022-02-02 19:11:32.000000000 +0100
 @@ -50,16 +50,7 @@

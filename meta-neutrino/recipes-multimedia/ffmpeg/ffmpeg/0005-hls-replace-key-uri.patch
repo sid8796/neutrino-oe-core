@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/libavformat/hls.c b/libavformat/hls.c
 index f5f549b24d..f74f587aba 100644
 --- a/libavformat/hls.c

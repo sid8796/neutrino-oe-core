@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/aplay/aplay.c b/aplay/aplay.c
 index f180d42..8736f0a 100644
 --- a/aplay/aplay.c

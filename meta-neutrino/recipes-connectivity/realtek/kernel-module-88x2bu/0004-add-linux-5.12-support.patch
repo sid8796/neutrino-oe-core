@@ -7,6 +7,9 @@ Subject: [PATCH] add linux 5.12 support
  os_dep/linux/recv_linux.c | 2 ++
  1 file changed, 2 insertions(+)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/os_dep/linux/recv_linux.c b/os_dep/linux/recv_linux.c
 index da9a84b..e210f30 100644
 --- a/os_dep/linux/recv_linux.c

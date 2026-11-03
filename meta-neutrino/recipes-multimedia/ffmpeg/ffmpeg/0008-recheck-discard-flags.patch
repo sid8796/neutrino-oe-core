@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/libavformat/hls.c
 +++ b/libavformat/hls.c
 @@ -2308,8 +2320,10 @@

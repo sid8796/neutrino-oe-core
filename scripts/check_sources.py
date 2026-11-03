@@ -41,6 +41,8 @@ def main():
             continue
         if path.suffix in ('.sh', '.py', '.bb', '.bbappend', '.conf', '.patch') or path.name.startswith('ni-neutrino'):
             assert b'\r\n' not in path.read_bytes(), str(path) + ': CRLF found'
+        if path.suffix in ('.patch', '.diff'):
+            assert re.search(r'^Upstream-Status:\s*(Pending|Submitted|Backport|Denied|Inappropriate)(?:\s|$)', path.read_text(), re.M), str(path) + ': missing or invalid Upstream-Status'
         if path.suffix in ('.bb', '.bbappend'):
             data = path.read_text()
             if path.suffix == '.bb' and path.name.startswith(('ni-', 'neutrino-plugin-')):
@@ -50,8 +52,9 @@ def main():
             for name in re.findall(r"""file://([^\s"'();,]+)""", uris):
                 if '${' not in name:
                     assert (path.parent / 'files' / name).exists() or (path.parent / name).exists() or any(path.parent.rglob(name)), (path, name)
-    print('Source reference and line ending checks passed; this is not a BitBake parse or compile.')
+    print('Source reference, patch status and line ending checks passed; this is not a BitBake parse or compile.')
 
 
 if __name__ == '__main__':
     main()
+

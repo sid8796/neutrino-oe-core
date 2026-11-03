@@ -4,6 +4,8 @@ Date: Mon, 8 Feb 2016 22:14:31 +0200
 Subject: [PATCH] STV: Add SNR/Signal report parameters
 
 
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/dvb-frontends/stv090x.c b/drivers/media/dvb-frontends/stv090x.c
 index 264c4b8..12fd3d0 100644
 --- a/drivers/media/dvb-frontends/stv090x.c

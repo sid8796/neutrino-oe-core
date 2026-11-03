@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [distribution compatibility policy]
+
 diff --git a/include/uapi/linux/dvb/audio.h b/include/uapi/linux/dvb/audio.h
 index afeae063e640..a4d3b8744919 100644
 --- a/include/uapi/linux/dvb/audio.h

@@ -4,6 +4,8 @@ Date: Sat, 5 Mar 2016 00:32:57 +0200
 Subject: [PATCH] STV: Add PLS support
 
 
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/dvb-frontends/stv0900_core.c b/drivers/media/dvb-frontends/stv0900_core.c
 index fe31dd5..3a5df06 100644
 --- a/drivers/media/dvb-frontends/stv0900_core.c

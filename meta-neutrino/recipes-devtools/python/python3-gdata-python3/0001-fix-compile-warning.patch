@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/src/gdata/apps/migration/service.py
 +++ b/src/gdata/apps/migration/service.py
 @@ -9,8 +9,7 @@

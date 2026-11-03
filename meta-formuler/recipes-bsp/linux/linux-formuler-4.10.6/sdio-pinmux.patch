@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/brcmstb/board.c b/drivers/brcmstb/board.c
 index 3bdd0a1..d806cdb 100644
 --- a/drivers/brcmstb/board.c

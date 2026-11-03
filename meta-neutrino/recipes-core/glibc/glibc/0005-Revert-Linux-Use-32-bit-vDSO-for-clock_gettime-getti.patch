@@ -9,6 +9,9 @@ Subject: [PATCH] Revert "Linux: Use 32-bit vDSO for clock_gettime,
  sysdeps/unix/sysv/linux/clock_gettime.c | 51 ++++++-------------------
  2 files changed, 12 insertions(+), 45 deletions(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/sysdeps/unix/sysv/linux/Makefile b/sysdeps/unix/sysv/linux/Makefile
 index 76d0309dc2..f04db6e970 100644
 --- a/sysdeps/unix/sysv/linux/Makefile

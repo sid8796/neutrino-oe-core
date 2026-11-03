@@ -7,6 +7,8 @@ Subject: [PATCH 3/3] nand: ecc strength and bitflip
  drivers/mtd/nand/brcmstb_nand.c | 38 ++++++++++++++++++++++----------------
  1 file changed, 22 insertions(+), 16 deletions(-)
 
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/mtd/nand/brcmstb_nand.c b/drivers/mtd/nand/brcmstb_nand.c
 index b32a2c1..cf52d64 100644
 --- a/drivers/mtd/nand/brcmstb_nand.c

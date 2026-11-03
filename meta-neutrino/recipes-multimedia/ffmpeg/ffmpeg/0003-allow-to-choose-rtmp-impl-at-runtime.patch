@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/configure
 +++ b/configure
 @@ -3549,10 +3549,8 @@ xv_outdev_deps="xlib_xv xlib_x11 xlib_xext"

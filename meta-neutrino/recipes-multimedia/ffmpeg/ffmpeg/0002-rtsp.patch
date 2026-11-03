@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/libavformat/rtsp.c
 +++ b/libavformat/rtsp.c
 @@ -2391,6 +2391,8 @@ static int sdp_read_header(AVFormatContext *s)

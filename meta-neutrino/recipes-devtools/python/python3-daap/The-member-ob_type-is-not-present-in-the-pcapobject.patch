@@ -12,6 +12,9 @@ https://docs.python.org/3/c-api/structures.html
  md5module.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/md5module.c b/md5module.c
 index 4535d43..c3ca59e 100644
 --- a/md5module.c

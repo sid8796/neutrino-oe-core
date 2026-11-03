@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 --- a/Makefile	2016-05-16 12:27:59.473281412 +0200
 +++ b/Makefile	2016-05-16 12:28:42.889280668 +0200
 @@ -783,7 +783,7 @@

@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
 index 20b4a659e2e4..28f3bbe0af25 100644
 --- a/drivers/media/dvb-frontends/si2168.c

@@ -5,6 +5,9 @@ Subject: [PATCH] Revert "Remove twisted.web.client.getPage and friends"
 
 This reverts commit a21a1efce87c77b4acf309db9445643c2a6d8162.
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/src/twisted/web/client.py b/src/twisted/web/client.py
 index eb911ec53..433f4315f 100644
 --- a/src/twisted/web/client.py

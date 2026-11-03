@@ -9,6 +9,8 @@ https://patchwork.linuxtv.org/patch/23244/
 https://patchwork.linuxtv.org/patch/23243/
 https://patchwork.linuxtv.org/patch/23242/
 
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 diff --git a/drivers/media/dvb-core/dvb-usb-ids.h b/drivers/media/dvb-core/dvb-usb-ids.h
 index c117fb3..5e0735b 100644
 --- a/drivers/media/dvb-core/dvb-usb-ids.h

@@ -91,6 +91,9 @@ Subject: [PATCH] [PATCH] remove arc4random implementation
  create mode 100644 sysdeps/x86_64/chacha20-amd64-sse2.S
  create mode 100644 sysdeps/x86_64/chacha20_arch.h
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/NEWS b/NEWS
 index 1b89f9c010..36bcd4e6fc 100644
 --- a/NEWS

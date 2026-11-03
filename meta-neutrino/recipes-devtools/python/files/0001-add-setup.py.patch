@@ -8,6 +8,9 @@ Subject: [PATCH] add setup.py
  1 file changed, 6 insertions(+)
  create mode 100644 setup.py
 
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/setup.py b/setup.py
 new file mode 100644
 index 0000000..bac24a4

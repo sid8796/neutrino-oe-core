@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 --- a/libavcodec/aacdec_template.c
 +++ b/libavcodec/aacdec_template.c
 @@ -2488,7 +2488,7 @@ static int decode_extension_payload(AACContext *ac, GetBitContext *gb, int cnt,

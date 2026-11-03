@@ -1,3 +1,6 @@
+Upstream-Status: Pending
+Imported compatibility patch; upstream submission has not been verified.
+
 diff --git a/sysdeps/unix/sysv/linux/bits/ptrace-shared.h b/sysdeps/unix/sysv/linux/bits/ptrace-shared.h
 index eafbbbc6fc..f5aaaff46a 100644
 --- a/sysdeps/unix/sysv/linux/bits/ptrace-shared.h

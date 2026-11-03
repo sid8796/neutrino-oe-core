@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
+
 --- a/drivers/media/dvb-core/dvb-usb-ids.h
 +++ b/drivers/media/dvb-core/dvb-usb-ids.h
 @@ -73,12 +73,14 @@
