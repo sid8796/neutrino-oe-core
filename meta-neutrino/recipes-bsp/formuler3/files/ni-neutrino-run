@@ -1,0 +1,90 @@
+#!/bin/sh
+set -eu
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+export LANG=ru_RU.UTF-8
+log_step() {
+    printf '[ni-neutrino] %s\n' "$*"
+    if [ -c /dev/console ]; then
+        printf '[ni-neutrino] %s\n' "$*" >/dev/console 2>/dev/null || true
+    fi
+}
+report_failure() {
+    status=$?
+    trap - 0
+    if [ "$status" -ne 0 ] && [ -c /dev/console ]; then
+        printf '[ni-neutrino] Startup/execution failed: status=%s\n' "$status" >/dev/console 2>/dev/null || true
+        if [ -n "${NI_LOGFILE:-}" ] && [ -r "$NI_LOGFILE" ]; then
+            tail -n 40 "$NI_LOGFILE" >/dev/console 2>/dev/null || true
+        fi
+    fi
+    exit "$status"
+}
+trap report_failure 0
+model=$(cat /proc/stb/info/model 2>/dev/null || true)
+log_step "Supervisor starting; model=${model:-unknown}; kernel=$(uname -r)"
+if [ "$model" != formuler3 ]; then
+    log_step 'This service is for Formuler F3 only.'
+    exit 1
+fi
+if pidof enigma2 >/dev/null 2>&1; then
+    log_step 'Enigma2 is running; refusing to share DVB and framebuffer devices.'
+    exit 1
+fi
+# Preserve the vendor module order; do not force-load or unload modules.
+for module in formuler3_1 formuler3_2 formuler3_3 formuler3_4; do
+    loaded_name=$module
+    if [ "$module" = formuler3_4 ]; then loaded_name=formuler3; fi
+    if [ -d "/sys/module/$loaded_name" ]; then continue; fi
+    if ! modprobe "$module"; then
+        log_step "Module $module failed to load. Inspect dmesg before continuing."
+        exit 1
+    fi
+done
+# Wait for asynchronous driver/udev device creation, with a bounded timeout.
+devices='/dev/fb0 /dev/dvb/adapter0/frontend0 /dev/dvb/adapter0/video0 /dev/dvb/adapter0/audio0'
+remaining=20
+while :; do
+    missing=''
+    for device in $devices; do
+        if [ ! -c "$device" ]; then missing="$missing $device"; fi
+    done
+    if [ -z "$missing" ] || [ "$remaining" -eq 0 ]; then break; fi
+    sleep 1
+    remaining=$((remaining - 1))
+done
+for device in $devices; do
+    if [ ! -c "$device" ]; then
+        log_step "Missing required device after waiting: $device"
+        exit 1
+    fi
+done
+mkdir -p /var/tuxbox/config/zapit /var/tuxbox/plugins /media/hdd /tmp
+export NEUTRINO_EXIT_CODES=posix
+export NEUTRINO_EXIT_ACTION_FILE=/run/neutrino.exit-action
+rm -f "$NEUTRINO_EXIT_ACTION_FILE"
+child=''
+stop_child() {
+    if [ -n "$child" ]; then
+        kill "$child" 2>/dev/null || true
+        wait "$child" 2>/dev/null || true
+    fi
+    exit 0
+}
+trap stop_child INT TERM
+if [ "${NI_SERIAL_LOG:-1}" = 1 ] && [ -c /dev/console ]; then
+    log_step 'Devices ready; launching Neutrino with application output on the serial console.'
+    /usr/bin/neutrino >/dev/console 2>&1 &
+else
+    log_step 'Devices ready; launching Neutrino with application output in the service log.'
+    /usr/bin/neutrino &
+fi
+child=$!
+rc=0
+wait "$child" || rc=$?
+child=''
+# Bring-up: do not reboot automatically or loop after a crash.
+log_step "Neutrino exited: status=$rc"
+if [ -r "$NEUTRINO_EXIT_ACTION_FILE" ]; then
+    echo "Requested action (manual during bring-up): $(cat "$NEUTRINO_EXIT_ACTION_FILE")"
+fi
+exit "$rc"

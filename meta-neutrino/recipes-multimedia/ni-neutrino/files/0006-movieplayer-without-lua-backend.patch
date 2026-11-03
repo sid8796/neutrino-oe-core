@@ -1,0 +1,41 @@
+From: F3 bring-up <local@localhost>
+Subject: [PATCH] movieplayer: guard Lua backend and script UI listeners
+
+The script runner is already optional; its backend headers and UI listener
+registration must follow the same ENABLE_LUA condition.
+
+Upstream-Status: Pending
+
+--- a/src/gui/movieplayer.cpp
++++ b/src/gui/movieplayer.cpp
+@@ -49,8 +49,10 @@
+ #include <gui/plugins.h>
+ #include <gui/videosettings.h>
+ #include <gui/widget/settingitem.h>
++#ifdef ENABLE_LUA
+ #include <gui/lua/luainstance.h>
+ #include <gui/lua/lua_video.h>
++#endif
+ #include <gui/screensaver.h>
+ #include <gui/widget/menue_options.h>
+ #include <driver/screenshot.h>
+@@ -2290,7 +2292,9 @@
+ 	/* the hint covers the data fetch only: while the script shows a
+ 	 * menu or message of its own, the hint and its loader animation
+ 	 * would otherwise keep painting over it */
++#ifdef ENABLE_LUA
+ 	CLuaInstance::setScriptUiListener(&CMoviePlayerGui::liveUrlHintToggle, box);
++#endif
+ 
+ 	std::string result_code = "";
+ 	std::string result_string = "";
+@@ -2304,7 +2308,9 @@
+ 	lua->runScript(lua_script.c_str(), &args, &result_code, &result_string, &lua_error);
+ 	delete lua;
+ #endif
++#ifdef ENABLE_LUA
+ 	CLuaInstance::setScriptUiListener(NULL, NULL);
++#endif
+ 	if ((result_code != "0") || result_string.empty()) {
+ 		if (error_string) {
+ 			if (!lua_error.empty())

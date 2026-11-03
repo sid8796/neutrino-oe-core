@@ -1,0 +1,24 @@
+From: F3 bring-up <local@localhost>
+Subject: [PATCH] movieplayer: guard optional Lua headers
+
+menue.h already supplies the opaque lua_State type for non-Lua builds.
+Only include the Lua API when that backend is enabled.
+
+Upstream-Status: Pending
+
+--- a/src/gui/movieplayer.h
++++ b/src/gui/movieplayer.h
+@@ -52,11 +52,13 @@
+ #include <OpenThreads/Thread>
+ #include <OpenThreads/Condition>
+ 
++#if ENABLE_LUA
+ extern "C" {
+ #include <lua.h>
+ #include <lauxlib.h>
+ #include <lualib.h>
+ }
++#endif
+ 
+ #ifndef MAX_PLAYBACK_PIDS
+ #define MAX_PLAYBACK_PIDS 40

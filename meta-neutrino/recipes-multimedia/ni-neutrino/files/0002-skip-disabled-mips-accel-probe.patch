@@ -1,0 +1,23 @@
+From: F3 bring-up <local@localhost>
+Subject: [PATCH] Do not probe proprietary blitter when MIPS acceleration is disabled
+
+Upstream-Status: Inappropriate [Formuler F3 bring-up profile]
+
+--- a/src/driver/fb_accel_mips.cpp
++++ b/src/driver/fb_accel_mips.cpp
+@@ -257,6 +257,7 @@
+ 	blit_thread = false;
+ #endif
+ 	fb_name  = "mipsbox framebuffer";
++#if ENABLE_MIPS_ACC
+ 	fb_fd = open(FB_DEVICE, O_RDWR);
+ 	if (fb_fd < 0)
+ 	{
+@@ -279,7 +280,6 @@
+ 	/* hardware doesn't allow us to detect whether the opcode is working */
+ 	supportblendingflags = false;
+ #endif
+-#if ENABLE_MIPS_ACC
+ 	OpenThreads::Thread::start();
+ #endif
+ }

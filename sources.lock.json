@@ -1,0 +1,53 @@
+{
+  "ni-neutrino": {
+    "url": "https://github.com/sid8796/ni-neutrino.git",
+    "branch": "formuler3",
+    "rev": "5c6dc790522e24e729d46e9a1d91f7468f6e0748",
+    "upstream_url": "https://github.com/neutrino-images/ni-neutrino.git",
+    "upstream_base": "0b86f12c6673a84040a12bf96f5bc5ae9d822a54"
+  },
+  "ni-libstb-hal": {
+    "url": "https://github.com/sid8796/ni-libstb-hal.git",
+    "branch": "formuler3",
+    "rev": "ad730ed072cd0b836a2a9efcadb4c52ff6dd7aa0",
+    "upstream_url": "https://github.com/neutrino-images/ni-libstb-hal.git",
+    "upstream_base": "03296a3a88db7a890669d493db5571f690acd4e6"
+  },
+  "ni-openthreads": {
+    "url": "https://github.com/neutrino-images/ni-openthreads.git",
+    "rev": "0636bebc470f3626830e7de4335f40c22c8fda51"
+  },
+  "libdvbsi++": {
+    "url": "https://github.com/jack2015/libdvbsi.git",
+    "rev": "f3c40ea6daa94a3bfeeee1ef9381c68629a68b81"
+  },
+  "reference-ni-buildsystem": {
+    "url": "https://github.com/neutrino-images/ni-buildsystem.git",
+    "rev": "2999bab12e77e493956635c754703dd022012280"
+  },
+  "libmicrohttpd": {
+    "version": "1.0.10",
+    "sha256": "04bfe8ef75db7d629a33de767599765cecadc56274a39822d5d081030d577685"
+  },
+  "driver-archive": {
+    "version": "4.10.6-20170413",
+    "sha256": "0d06e58d00e60c98875500eccfa9512af175c862727e59c98600eea7f7f343dd"
+  },
+  "metadata_origin": {
+    "url": "https://github.com/OpenPLi/openpli-oe-core.git",
+    "branch": "scarthgap",
+    "rev": "47e156fabcc3555dde753a111ab06740824f2e2d"
+  },
+  "bitbake": {
+    "url": "https://git.openembedded.org/bitbake",
+    "rev": "6b443060ee96a62efb94723c97f22b51c9b20507"
+  },
+  "openembedded-core": {
+    "url": "https://git.openembedded.org/openembedded-core",
+    "rev": "44b46b8ad6e461dd9289face17cbfaeca6f5d0f2"
+  },
+  "meta-openembedded": {
+    "url": "https://git.openembedded.org/meta-openembedded",
+    "rev": "2db6aece32c7f8ebf6015b468e1b4e21de072e3b"
+  }
+}

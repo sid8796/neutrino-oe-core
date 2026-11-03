@@ -1,0 +1,25 @@
+From: F3 bring-up <local@localhost>
+Subject: [PATCH] luaserver: compile backend only when Lua is enabled
+
+All callers already use ENABLE_LUA; avoid requiring Lua APIs in a disabled
+build even though the source remains in the system library source list.
+
+Upstream-Status: Pending
+
+--- a/src/system/luaserver.cpp
++++ b/src/system/luaserver.cpp
+@@ -36,6 +36,8 @@
+ #endif
+ 
+ #include <config.h>
++
++#ifdef ENABLE_LUA
+ 
+ #include <cstdio>
+ #include <cstdlib>
+@@ -311,3 +313,5 @@
+ 	server.run(luaserver_parse_command, LUACLIENT_VERSION);
+ 	pthread_exit(NULL);
+ }
++
++#endif /* ENABLE_LUA */

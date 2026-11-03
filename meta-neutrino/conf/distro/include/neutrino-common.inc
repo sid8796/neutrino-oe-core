@@ -1,0 +1,108 @@
+#@TYPE: Distribution
+#@NAME: OpenPLi
+#@DESCRIPTION: Embedded Linux Distribution Configuration for STB's
+
+require conf/distro/include/neutrino-srcrevs.inc
+
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio"
+
+DISTRO_NAME ?= "openpli"
+DISTRO_HOST ?= "${@os.uname()[1]}"
+DISTRO_VERSION ?= "homebuild"
+DISTRO_TYPE ?= "homebuild"
+
+IPKG_VARIANT = "opkg"
+PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
+
+FEED_NAME ?= "${DISTRO_NAME}-${DISTRO_VERSION}"
+DISTRO_FEED_URI ?= "http://${DISTRO_HOST}/feeds/${FEED_NAME}"
+STATIC-FEED_NAME ?= "${DISTRO_NAME}-${DISTRO_VERSION}"
+DISTRO_STATIC-FEED_URI ?= "http://${DISTRO_HOST}/feeds/${STATIC-FEED_NAME}"
+DISTRO_FEED_PREFIX ?= "${DISTRO_NAME}"
+
+IMAGE_NAME = "${IMAGE_BASENAME}-${DISTRO_VERSION}-${MACHINE}"
+IMAGE_LINK_NAME = ""
+CACHE ?= "${TMPDIR}/cache/${LIBC}/${MACHINE}"
+DEPLOY_DIR ?= "${TMPDIR}/deploy/${LIBC}"
+DEPLOY_DIR_IMAGE = "${DEPLOY_DIR}/images/${MACHINE}"
+
+PINHERIT += "rust-target-config"
+
+PREFERRED_RPROVIDER_libfribidi = "libfribidi"
+PREFERRED_RPROVIDER_libav = "ffmpeg"
+PREFERRED_RPROVIDER_libid3tag = "libid3tag"
+PREFERRED_RPROVIDER_libtool ?= "libtool"
+PREFERRED_RPROVIDER_libtool-native ?= "libtool-native"
+PREFERRED_RPROVIDER_libltdl ?= "libtool"
+
+PREFERRED_RPROVIDER_python3-pycrypto ?= "python3-pycryptodome"
+PREFERRED_RPROVIDER_python3-yenc ?= "python3-sabyenc3"
+
+PREFERRED_RPROVIDER_ssh ?= "openssh"
+
+
+PREFERRED_PROVIDERS += "virtual/${TARGET_PREFIX}gcc-intermediate:gcc-cross-intermediate"
+PREFERRED_PROVIDERS += "virtual/${TARGET_PREFIX}gcc:gcc-cross"
+PREFERRED_PROVIDERS += "virtual/${TARGET_PREFIX}g++:gcc-cross"
+
+LICENSE_FLAGS_ACCEPTED = "commercial"
+LICENSE_FLAGS_ACCEPTED = "commercial commercial_mpg123"
+COMMERCIAL_AUDIO_PLUGINS ?= "gst-plugins-ugly-mad gst-plugins-ugly-mpegaudioparse"
+COMMERCIAL_VIDEO_PLUGINS ?= "gst-plugins-ugly-mpeg2dec gst-plugins-ugly-mpegstream gst-plugins-bad-mpegvideoparse"
+
+# OE optimization defaults to -O2 which makes for much larger binaries.
+# Overridden here to use -Os instead, resulting in smaller images.
+
+FULL_OPTIMIZATION = "-Os -pipe ${DEBUG_FLAGS}"
+
+# build some core libs with better compiler optimization for better performance
+
+O2_OPT = "-O2 -pipe ${DEBUG_FLAGS}"
+O3_OPT = "-O3 -pipe ${DEBUG_FLAGS}"
+
+FULL_OPTIMIZATION:pn-flac = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-jpeg = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-lame = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-liba52 = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libdca = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libgcrypt = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libmad = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libogg = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libpng = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libsamplerate = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-libvorbis = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-tremor = "${O2_OPT}"
+FULL_OPTIMIZATION:pn-zlib = "${O2_OPT}"
+
+DISTRO_FEATURES ?= "alsa pulseaudio bluetooth directfb ext2 largefile wifi nfs zeroconf mplt pam ${DISTRO_FEATURES_LIBC} ipv4 ipv6"
+
+QA_LOGFILE = "${TMPDIR}/qa.log"
+
+OEINCLUDELOGS ?= "yes"
+KERNEL_CONSOLE ?= "ttyS0"
+
+OLDEST_KERNEL = "3.2"
+
+KERNEL_DEBUG_TIMESTAMPS = "1"
+
+BB_GENERATE_MIRROR_TARBALLS ??= "0"
+
+NO32LIBS ??= "1"
+
+# Missing checksums should raise an error
+BB_STRICT_CHECKSUM = "0"
+
+# Place output in "tmp" as before, not "tmp-glibc"
+TCLIBCAPPEND = ""
+
+# Don't grab feeds for lower level archs, e.g. mips32el should not
+# attempt to fetch mipsel, and armv7 need not fetch armv5 etcetera.
+DISTRO_FEED_ARCHS = "all ${TUNE_PKGARCH} ${MACHINE_ARCH}"
+
+# Use OpenSSL only
+PACKAGECONFIG:pn-curl = "${@bb.utils.contains("DISTRO_FEATURES", "ipv6", "ipv6", "", d)} openssl proxy zlib"
+PACKAGECONFIG:pn-openldap = "openssl modules mdb ldap meta null passwd proxycache dnssrv ${@bb.utils.contains('DISTRO_FEATURES', 'ipv6', 'ipv6', '', d)}"
+
+
+# Allow java, svn and unzip executed on host
+HOSTTOOLS += "java svn unzip msgfmt zip"

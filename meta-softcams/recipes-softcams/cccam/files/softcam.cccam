@@ -1,0 +1,7 @@
+#!/bin/sh
+case "${1:-}" in
+start) exec start-stop-daemon -S -b -x /usr/bin/CCcam -- -C /var/keys/CCcam.cfg ;;
+stop) exec start-stop-daemon -K -o -R TERM/5/KILL/2 -x /usr/bin/CCcam ;;
+restart) "$0" stop; "$0" start ;;
+*) echo "Usage: $0 start|stop|restart" >&2; exit 2 ;;
+esac

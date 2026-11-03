@@ -1,0 +1,7 @@
+/build*/
+/downloads/
+/sstate-cache/
+/tmp*/
+*.log
+__pycache__/
+/local-private/

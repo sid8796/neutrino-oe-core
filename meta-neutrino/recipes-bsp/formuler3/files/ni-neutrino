@@ -1,0 +1,37 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          ni-neutrino
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: NI Neutrino development service for Formuler F3
+### END INIT INFO
+PIDFILE=/run/ni-neutrino-supervisor.pid
+NI_LOGFILE=/var/log/ni-neutrino.log
+export NI_LOGFILE
+case "$1" in
+    start)
+        if [ -s "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+            exit 0
+        fi
+        mkdir -p /run
+        /usr/sbin/ni-neutrino-run >>"$NI_LOGFILE" 2>&1 &
+        echo "$!" > "$PIDFILE"
+        ;;
+    stop)
+        if [ -s "$PIDFILE" ]; then
+            kill "$(cat "$PIDFILE")" 2>/dev/null || true
+            rm -f "$PIDFILE"
+        fi
+        ;;
+    restart)
+        "$0" stop
+        sleep 2
+        "$0" start
+        ;;
+    status)
+        [ -s "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null
+        ;;
+    *) echo "Usage: $0 {start|stop|restart|status}" >&2; exit 2 ;;
+esac

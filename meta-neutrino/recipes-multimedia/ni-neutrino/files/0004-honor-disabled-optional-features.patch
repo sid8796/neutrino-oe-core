@@ -1,0 +1,38 @@
+From: Formuler F3 bring-up
+Subject: [PATCH] configure: honor disabled optional display and PiP features
+
+AC_ARG_ENABLE action-if-given also runs for --disable. Define the feature
+macro only when the option is enabled, matching the Automake condition.
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -281,7 +281,8 @@
+ 
+ AC_ARG_ENABLE(lcd4linux,
+ 	AS_HELP_STRING([--enable-lcd4linux], [enable LCD4Linux support @<:@default=no@:>@]),
+-	AC_DEFINE(ENABLE_LCD4LINUX, 1, [enable LCD4Linux support]))
++	AS_IF([test "x$enableval" = "xyes"],
++		[AC_DEFINE(ENABLE_LCD4LINUX, 1, [enable LCD4Linux support])]))
+ AM_CONDITIONAL(ENABLE_LCD4LINUX, test "$enable_lcd4linux" = "yes")
+ 
+ # lcd
+@@ -298,7 +299,8 @@
+ 
+ AC_ARG_ENABLE(graphlcd,
+ 	AS_HELP_STRING([--enable-graphlcd], [enable GraphLCD support @<:@default=no@:>@]),
+-	AC_DEFINE(ENABLE_GRAPHLCD, 1, [enable GraphLCD support]))
++	AS_IF([test "x$enableval" = "xyes"],
++		[AC_DEFINE(ENABLE_GRAPHLCD, 1, [enable GraphLCD support])]))
+ AM_CONDITIONAL(ENABLE_GRAPHLCD, test "$enable_graphlcd" = "yes")
+ 
+ ## OpenWeather API key
+@@ -636,7 +638,8 @@
+ 
+ AC_ARG_ENABLE(pip,
+ 	AS_HELP_STRING([--enable-pip], [enable picture in picture support @<:@default=no@:>@]),
+-	AC_DEFINE(ENABLE_PIP, 1, [enable picture in picture support]))
++	AS_IF([test "x$enableval" = "xyes"],
++		[AC_DEFINE(ENABLE_PIP, 1, [enable picture in picture support])]))
+ AM_CONDITIONAL(ENABLE_PIP, test "$enable_pip" = "yes")
+ 
+ case "$BOXMODEL" in

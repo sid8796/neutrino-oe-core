@@ -1,0 +1,27 @@
+From: F3 bring-up <local@localhost>
+Subject: [PATCH] Avoid requiring Lua headers when Lua support is disabled
+
+Menu observers retain opaque lua_State pointers even in a non-Lua build.
+Forward-declare the type instead of pulling in the optional SDK headers.
+
+Upstream-Status: Pending
+
+--- a/src/gui/widget/menue.h
++++ b/src/gui/widget/menue.h
+@@ -48,11 +48,16 @@
+ #include <vector>
+ #include <neutrino_menue.h>
+ #include "menue_target.h"
++#if ENABLE_LUA
+ extern "C" {
+ #include <lua.h>
+ #include <lauxlib.h>
+ #include <lualib.h>
+ }
++#else
++/* Menu callbacks only store pointers when the Lua backend is absent. */
++typedef struct lua_State lua_State;
++#endif
+ 
+ #define NO_WIDGET_ID -1
+ 

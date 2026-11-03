@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+# NI writes pre-/post-wlan0.sh hooks rather than wpa-* interface attributes.
+# Delegate process and pidfile management to the distro's wpa_supplicant helper.
+export IFACE="${IFACE:-wlan0}"
+export ADDRFAM="${ADDRFAM:-inet}"
+export METHOD="${METHOD:-dhcp}"
+export IF_WPA_CONF="${IF_WPA_CONF:-/etc/wpa_supplicant.conf}"
+export IF_WPA_DRIVER="${IF_WPA_DRIVER:-wext}"
+case "${1:-}" in
+    start) export MODE=start PHASE=pre-up ;;
+    stop) export MODE=stop PHASE=post-down ;;
+    *) echo 'Usage: ni-wifi-ifupdown start|stop' >&2; exit 2 ;;
+esac
+if [ ! -x /etc/wpa_supplicant/ifupdown.sh ]; then
+    echo 'Missing wpa_supplicant ifupdown helper' >&2
+    exit 1
+fi
+exec /etc/wpa_supplicant/ifupdown.sh
