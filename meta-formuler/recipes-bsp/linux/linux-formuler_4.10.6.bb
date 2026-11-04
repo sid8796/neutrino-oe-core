@@ -46,6 +46,12 @@ KERNEL_EXTRA_ARGS = "EXTRA_CFLAGS=-Wno-attribute-alias"
 
 FILES:${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}*"
 
+# The vendor kernel package stages vmlinux.gz in /tmp for its flash postinstall.
+# kernel.bbclass also installs the development maps/config under IMAGEDEST.
+# Preserve this legacy package layout; do not relax empty-dirs for other packages.
+INSANE_SKIP:${KERNEL_PACKAGE_NAME}-image += "empty-dirs"
+INSANE_SKIP:${KERNEL_PACKAGE_NAME}-dev += "empty-dirs"
+
 kernel_do_install:append() {
 	${STRIP} ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
 	gzip -9c ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION} > ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
