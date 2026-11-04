@@ -1,7 +1,5 @@
 Upstream-Status: Inappropriate [legacy Formuler vendor kernel integration]
 
-diff --git a/drivers/brcmstb/board.c b/drivers/brcmstb/board.c
-index 3bdd0a1..d806cdb 100644
 --- a/drivers/brcmstb/board.c
 +++ b/drivers/brcmstb/board.c
 @@ -296,28 +296,28 @@ void board_pinmux_setup(void)
@@ -52,3 +50,4 @@ index 3bdd0a1..d806cdb 100644
 +	PADCTRL(8, gpio_122_pad_ctrl, 2);
  
  #elif defined(CONFIG_BCM7425)
+ 
