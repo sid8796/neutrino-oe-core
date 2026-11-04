@@ -1,4 +1,31 @@
-# Validation — 2026-11-03
+# Validation
+
+## First complete standalone image — 2026-11-04
+
+Built from core commit de688495317833b37e2ee162bcd93c080f7d9b08 in
+the Linux filesystem, using build directory /home/sid8796/neutrino-build.
+The final incremental invocation completed all 3977 tasks successfully;
+3940 were already complete from the preceding build invocations.
+
+- Kernel patch series refreshed without disabling patch-fuzz QA. Replaying
+  all 16 patches produced identical SHA256 values for all 26 touched source files.
+- Kernel do_prepare_recipe_sysroot passed after recreating its stale workdir.
+- Kernel do_package_qa passed with the empty-dirs exception scoped to this
+  vendor recipe's kernel-image/kernel-dev staging layout only.
+- Image do_rootfs, required GUI resource/locale validation, do_image_qa,
+  do_image_ubifs, do_image_ubi and do_image_complete all passed.
+- check_deploy.py passed for Neutrino-0.1-formuler3_usb.zip:
+  kernel.bin 5,337,094 / 6,291,456 bytes; rootfs.bin 44,171,264 / 256,901,120 bytes.
+- USB ZIP SHA256:
+  9866e28db2731ae93c8f88f8530b55a5306e0a07ec5f3453e14d3160d69996de
+
+This validates compilation and image packaging. Booting this new standalone
+image, kernel/vendor-module runtime compatibility and optional softcams have
+not been tested on the receiver. The earlier GUI packaging warning about an
+embedded TMPDIR reference remains; it did not fail package QA. Personal Wi-Fi
+credentials and channel lists are not part of this base image.
+
+## Initial preparation — 2026-11-03
 
 Standalone checkout: neutrino-oe-core, Yocto Scarthgap, machine formuler3.
 
