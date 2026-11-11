@@ -82,9 +82,15 @@ child=$!
 rc=0
 wait "$child" || rc=$?
 child=''
-# Bring-up: do not reboot automatically or loop after a crash.
 log_step "Neutrino exited: status=$rc"
 if [ -r "$NEUTRINO_EXIT_ACTION_FILE" ]; then
-    echo "Requested action (manual during bring-up): $(cat "$NEUTRINO_EXIT_ACTION_FILE")"
+    action=$(cat "$NEUTRINO_EXIT_ACTION_FILE")
+    rm -f "$NEUTRINO_EXIT_ACTION_FILE"
+    log_step "Requested action: $action"
+    if [ "$rc" -eq 0 ] && [ "$action" = reboot ]; then
+        log_step 'Rebooting via SysV init'
+        sync
+        /sbin/reboot
+    fi
 fi
 exit "$rc"
