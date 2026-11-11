@@ -1,7 +1,37 @@
 #!/bin/sh
+
+daemon=/usr/bin/oscam-emu
+pidfile=/var/run/oscam-emu.pid
+
+running() {
+    for pid in $(pidof oscam-emu); do
+        if [ "$(readlink "/proc/$pid/exe" 2>/dev/null)" = "$daemon" ]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+stop() {
+    start-stop-daemon -K -o -x "$daemon" || return $?
+    remaining=10
+    while running; do
+        if [ "$remaining" -eq 0 ]; then
+            echo "OSCam did not stop within 10 seconds" >&2
+            return 1
+        fi
+        sleep 1
+        remaining=$((remaining - 1))
+    done
+}
+
 case "${1:-}" in
-start) exec start-stop-daemon -S -x /usr/bin/oscam-emu -- --config-dir /var/tuxbox/config/oscam-emu --daemon --pidfile /var/run/oscam-emu.pid ;;
-stop) exec start-stop-daemon -K -o -R TERM/5/KILL/2 -x /usr/bin/oscam-emu ;;
-restart) "$0" stop; "$0" start ;;
-*) echo "Usage: $0 start|stop|restart" >&2; exit 2 ;;
+    start)
+        exec start-stop-daemon -S -o -x "$daemon" -- \
+            --config-dir /var/tuxbox/config/oscam-emu --daemon --pidfile "$pidfile"
+        ;;
+    stop) stop ;;
+    restart) stop && exec "$0" start ;;
+    status) if ! running; then exit 3; fi ;;
+    *) echo "Usage: $0 start|stop|restart|status" >&2; exit 2 ;;
 esac

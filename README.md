@@ -95,6 +95,8 @@ bitbake neutrino-plugin-softcams-cccam
 ```
 
 OSCam: /var/tuxbox/config/oscam-emu/oscam.conf, oscam.server, oscam.user.
+Для локального DVBAPI Neutrino задайте в секции [dvbapi] enabled = 1 и pmt_mode = 1.
+Управление OSCam доступно в меню «Сервис → Camd control». При запуске образа OSCam стартует, если был включён в меню.
 CCcam: /var/keys/CCcam.cfg. Учётные данные не поставляются. Управление:
 /etc/init.d/softcam.oscam-emu или /etc/init.d/softcam.cccam.
 Графы зависимостей проверены; compile/runtime этих softcam ещё не проверялись.

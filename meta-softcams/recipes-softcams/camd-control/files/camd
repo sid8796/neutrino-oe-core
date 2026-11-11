@@ -1,0 +1,46 @@
+#!/bin/sh
+set -eu
+
+action=${1:-}
+name=${2:-}
+backend=/etc/init.d/softcam.oscam-emu
+flag=/var/etc/.oscam
+
+case "$action" in
+    start|stop|restart|status) ;;
+    *) echo "Usage: $0 {start|stop|restart|status} [oscam]" >&2; exit 2 ;;
+esac
+
+case "$name" in
+    oscam)
+        if [ ! -x "$backend" ]; then
+            echo "OSCam is unavailable" >&2
+            exit 1
+        fi
+        ;;
+    '')
+        if [ ! -x "$backend" ]; then exit 0; fi
+        case "$action" in
+            start|restart) if [ ! -e "$flag" ]; then exit 0; fi ;;
+        esac
+        ;;
+    *) echo "Unsupported CAM: $name" >&2; exit 2 ;;
+esac
+
+if [ "$action" != restart ]; then
+    exec "$backend" "$action"
+fi
+
+"$backend" restart
+if command -v pzapit >/dev/null 2>&1 && [ -S /tmp/zapit.sock ]; then
+    remaining=5
+    while ! awk '$4 == "00010000" && $8 == "/tmp/camd.socket" { found=1 } END { exit !found }' /proc/net/unix; do
+        if [ "$remaining" -eq 0 ]; then
+            echo "OSCam restarted, DVBAPI socket is not ready" >&2
+            exit 0
+        fi
+        sleep 1
+        remaining=$((remaining - 1))
+    done
+    pzapit -rz
+fi
