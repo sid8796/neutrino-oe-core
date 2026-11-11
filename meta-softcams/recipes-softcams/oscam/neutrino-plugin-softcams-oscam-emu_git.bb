@@ -9,6 +9,10 @@ S = "${WORKDIR}/git"
 inherit cmake
 DEPENDS = "openssl libusb libdvbcsa pcsc-lite"
 EXTRA_OECMAKE = "-DOSCAM_SYSTEM_NAME=Tuxbox -DWEBIF=1 -DWITH_SSL=1 -DHAVE_LIBUSB=1 -DHAVE_PCSC=1 -DCARDREADER_PCSC=1 -DHAVE_LIBDVBCSA=1 -DUSE_COMPRESS=0 -DWITH_STAPI=0"
+do_configure:prepend() {
+    # Let Yocto split debug symbols and preserve the toolchain's linker flags.
+    sed -i '/^[[:space:]]*set (CMAKE_EXE_LINKER_FLAGS "-s")$/d' "${S}/CMakeLists.txt"
+}
 do_install() {
     install -d ${D}${bindir} ${D}${sysconfdir}/init.d ${D}/var/tuxbox/config/oscam-emu
     install -m 0755 ${B}/oscam ${D}${bindir}/oscam-emu
