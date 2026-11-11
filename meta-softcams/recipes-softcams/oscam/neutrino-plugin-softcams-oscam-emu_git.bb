@@ -3,7 +3,7 @@ HOMEPAGE = "https://github.com/oscam-mirror/oscam-emu"
 LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 PV = "1.0+git"
-SRC_URI = "git://github.com/oscam-mirror/oscam-emu.git;protocol=https;branch=master file://softcam.oscam-emu"
+SRC_URI = "git://github.com/oscam-mirror/oscam-emu.git;protocol=https;branch=master file://softcam.oscam-emu file://oscam.conf"
 SRCREV = "ad7588c6dd83f3780812580c9a2e63b603680106"
 S = "${WORKDIR}/git"
 inherit cmake
@@ -16,9 +16,12 @@ do_configure:prepend() {
 }
 do_install() {
     install -d ${D}${bindir} ${D}${sysconfdir}/init.d ${D}/var/tuxbox/config/oscam-emu
+
+    install -m 0644 ${WORKDIR}/oscam.conf ${D}/var/tuxbox/config/oscam-emu/oscam.conf
     install -m 0755 ${B}/oscam ${D}${bindir}/oscam-emu
     install -d ${D}${localstatedir}/bin
     ln -s ${bindir}/oscam-emu ${D}${localstatedir}/bin/oscam
     install -m 0755 ${WORKDIR}/softcam.oscam-emu ${D}${sysconfdir}/init.d/softcam.oscam-emu
 }
 FILES:${PN} += "/var/tuxbox/config/oscam-emu ${localstatedir}/bin/oscam"
+CONFFILES:${PN} += "/var/tuxbox/config/oscam-emu/oscam.conf"
