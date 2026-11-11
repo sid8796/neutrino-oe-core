@@ -2,12 +2,12 @@ SUMMARY = "Experimental NI Neutrino image for Formuler F3"
 LICENSE = "MIT"
 COMPATIBLE_MACHINE = "^formuler3$"
 inherit core-image
+require ni-timezones.inc
 IMAGE_FEATURES += "ssh-server-dropbear debug-tweaks"
 IMAGE_INSTALL += "ni-neutrino ni-formuler3-init ca-certificates kmod init-ifupdown iproute2 ethtool"
 # Use the OpenPLi kernel-module recipe, compiled against this image's F3 kernel.
 IMAGE_INSTALL += "kernel-module-88x2bu wpa-supplicant iw"
-IMAGE_LINGUAS = "en-us ru-ru"
-IMAGE_INSTALL += "locale-base-ru-ru"
+IMAGE_LINGUAS = "en-us"
 IMAGE_ROOTFS_EXTRA_SPACE = "8192"
 # KiB; final .ubi and compressed kernel require a separate deploy-size check.
 IMAGE_ROOTFS_MAXSIZE = "250880"
@@ -34,6 +34,7 @@ python ni_validate_gui_resources() {
         share + '/tuxbox/neutrino/locale/english.locale',
         share + '/tuxbox/neutrino/locale/russian.locale',
         '/usr/lib/locale/locale-archive',
+        d.getVar('sysconfdir') + '/timezone.xml',
     ]
     for name in required:
         path = os.path.join(root, name.lstrip('/'))
@@ -50,8 +51,8 @@ python ni_validate_gui_resources() {
     env = dict(os.environ, PATH=d.getVar('PATH'))
     env['LOCALEARCHIVE'] = os.path.join(root, 'usr/lib/locale/locale-archive')
     locales = subprocess.check_output([localedef, '--list-archive'], env=env, text=True).splitlines()
-    if 'ru_RU.utf8' not in locales:
-        bb.fatal('Russian UTF-8 locale is absent from the rootfs locale archive')
+    if 'en_US.utf8' not in locales:
+        bb.fatal('English UTF-8 locale is absent from the rootfs locale archive')
 
     def catalog(name):
         path = os.path.join(root, (share + '/tuxbox/neutrino/locale/' + name + '.locale').lstrip('/'))
