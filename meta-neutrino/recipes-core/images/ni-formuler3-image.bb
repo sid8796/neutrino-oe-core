@@ -7,7 +7,7 @@ IMAGE_INSTALL += "ni-neutrino ni-formuler3-init ca-certificates kmod init-ifupdo
 # Use the OpenPLi kernel-module recipe, compiled against this image's F3 kernel.
 IMAGE_INSTALL += "kernel-module-88x2bu wpa-supplicant iw"
 IMAGE_LINGUAS = "en-us ru-ru"
-IMAGE_INSTALL += "ni-neutrino-ru locale-base-ru-ru"
+IMAGE_INSTALL += "locale-base-ru-ru"
 IMAGE_ROOTFS_EXTRA_SPACE = "8192"
 # KiB; final .ubi and compressed kernel require a separate deploy-size check.
 IMAGE_ROOTFS_MAXSIZE = "250880"
@@ -33,7 +33,6 @@ python ni_validate_gui_resources() {
         share + '/fonts/fa-solid-900.ttf',
         share + '/tuxbox/neutrino/locale/english.locale',
         share + '/tuxbox/neutrino/locale/russian.locale',
-        '/var/tuxbox/config/neutrino.conf',
         '/usr/lib/locale/locale-archive',
     ]
     for name in required:
@@ -64,7 +63,4 @@ python ni_validate_gui_resources() {
     english, russian = catalog('english'), catalog('russian')
     if english.keys() != russian.keys():
         bb.fatal('Russian Neutrino locale key set does not match the installed English locale')
-    with open(os.path.join(root, 'var/tuxbox/config/neutrino.conf')) as stream:
-        if 'language\trussian\n' not in stream.readlines():
-            bb.fatal('Russian Neutrino language is not selected in the initial config')
 }

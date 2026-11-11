@@ -26,7 +26,6 @@ ethtool
 kernel-module-88x2bu
 wpa-supplicant
 iw
-ni-neutrino-ru
 glibc-locale
 run-postinsts
 packagegroup-core-ssh-dropbear

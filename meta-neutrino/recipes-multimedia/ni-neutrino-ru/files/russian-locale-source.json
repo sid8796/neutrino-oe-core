@@ -1,8 +1,0 @@
-{
-  "keys": 3240,
-  "cyrillic_values": 696,
-  "english_fallback_values": 2476,
-  "source": "https://github.com/neutrino-mp/neutrino-mp/blob/master/data/locale/unmaintained/russkij.locale",
-  "source_git_blob": "52ceb1e1276403c7e257869d0f21920485719406",
-  "license": "GPL-2.0-or-later; inherited Neutrino translation plus local additions"
-}
