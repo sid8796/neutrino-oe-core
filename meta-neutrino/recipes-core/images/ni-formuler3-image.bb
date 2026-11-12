@@ -7,6 +7,7 @@ IMAGE_FEATURES += "ssh-server-dropbear debug-tweaks"
 IMAGE_INSTALL += "ni-neutrino ni-formuler3-init ca-certificates kmod init-ifupdown iproute2 ethtool"
 # Use the OpenPLi kernel-module recipe, compiled against this image's F3 kernel.
 IMAGE_INSTALL += "kernel-module-88x2bu wpa-supplicant iw"
+IMAGE_INSTALL += "neutrino-plugin-softcams-oscam-emu neutrino-plugin-softcams-cccam"
 IMAGE_LINGUAS = "en-us"
 IMAGE_ROOTFS_EXTRA_SPACE = "8192"
 # KiB; final .ubi and compressed kernel require a separate deploy-size check.

@@ -85,9 +85,10 @@ git push origin formuler3
 sources.lock.json. Затем проверьте оставшиеся внешние патчи, разбор BitBake,
 сборку и оборудование. Закреплённая сборка не меняется автоматически после push.
 
-## Необязательные softcam-рецепты
+## Softcam
 
-meta-softcams подключён, но softcam не включены в образ автоматически:
+OSCam-Emu и CCcam входят в образ `ni-formuler3-image` вместе с зависимостями.
+Собрать IPK отдельно можно следующими командами.
 
 ```sh
 bitbake neutrino-plugin-softcams-oscam-emu
@@ -99,4 +100,3 @@ OSCam: /var/tuxbox/config/oscam-emu/oscam.conf, oscam.server, oscam.user.
 Управление OSCam доступно в меню «Сервис → Camd control». При запуске образа OSCam стартует, если был включён в меню.
 CCcam: /var/keys/CCcam.cfg. Учётные данные не поставляются. Управление:
 /etc/init.d/softcam.oscam-emu или /etc/init.d/softcam.cccam.
-Графы зависимостей проверены; compile/runtime этих softcam ещё не проверялись.
