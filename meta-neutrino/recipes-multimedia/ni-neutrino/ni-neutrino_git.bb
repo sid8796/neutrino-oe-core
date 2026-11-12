@@ -32,7 +32,7 @@ EXTRA_OECONF = "--enable-dependency-tracking --with-target=cdk --with-targetpref
     --with-network-backend=ifupdown --without-debug"
 
 # Lua is enabled for plugins, the Lua server and WebTV stream scripts.
-RDEPENDS:${PN}:append = " lua luaposix"
+RDEPENDS:${PN}:append = " lua luaposix ni-web-vendor"
 # OE-Core Lua is static; expose its API to loadable modules such as luaposix.
 LDFLAGS:append = " -Wl,--export-dynamic"
 # Static HAL dependencies must follow libstb-hal.a with --as-needed.
