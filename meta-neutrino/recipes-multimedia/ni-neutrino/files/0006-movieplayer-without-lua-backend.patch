@@ -6,6 +6,8 @@ registration must follow the same ENABLE_LUA condition.
 
 Upstream-Status: Pending
 
+diff --git a/src/gui/movieplayer.cpp b/src/gui/movieplayer.cpp
+index af4ae508c..894719f60 100644
 --- a/src/gui/movieplayer.cpp
 +++ b/src/gui/movieplayer.cpp
 @@ -49,8 +49,10 @@
@@ -16,10 +18,10 @@ Upstream-Status: Pending
  #include <gui/lua/luainstance.h>
  #include <gui/lua/lua_video.h>
 +#endif
- #include <gui/screensaver.h>
- #include <gui/widget/menue_options.h>
- #include <driver/screenshot.h>
-@@ -2290,7 +2292,9 @@
+ #ifdef ENABLE_PYTHON
+ #include <gui/python/py_video.h>
+ #endif
+@@ -2294,7 +2296,9 @@ bool CMoviePlayerGui::luaGetUrl(const std::string &script, const std::string &fi
  	/* the hint covers the data fetch only: while the script shows a
  	 * menu or message of its own, the hint and its loader animation
  	 * would otherwise keep painting over it */
@@ -29,7 +31,7 @@ Upstream-Status: Pending
  
  	std::string result_code = "";
  	std::string result_string = "";
-@@ -2304,7 +2308,9 @@
+@@ -2308,7 +2312,9 @@ bool CMoviePlayerGui::luaGetUrl(const std::string &script, const std::string &fi
  	lua->runScript(lua_script.c_str(), &args, &result_code, &result_string, &lua_error);
  	delete lua;
  #endif

@@ -2,9 +2,9 @@
   "ni-neutrino": {
     "url": "https://github.com/sid8796/ni-neutrino.git",
     "branch": "formuler3",
-    "rev": "5c6dc790522e24e729d46e9a1d91f7468f6e0748",
+    "rev": "2745435c8016b31ab6b1eb7b3d48295f51fd9aa4",
     "upstream_url": "https://github.com/neutrino-images/ni-neutrino.git",
-    "upstream_base": "0b86f12c6673a84040a12bf96f5bc5ae9d822a54"
+    "upstream_base": "532eb9b316b3ff1b0b3f72846dc59f2e80312142"
   },
   "ni-libstb-hal": {
     "url": "https://github.com/sid8796/ni-libstb-hal.git",

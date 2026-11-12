@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/sid8796/ni-neutrino.git;protocol=https;branch=formul
            file://0006-movieplayer-without-lua-backend.patch \
            file://0007-plugins-without-lua-backend.patch \
            file://0008-luaserver-without-lua-backend.patch"
-SRCREV = "9321649670812bcbdefe365d93c097522090d053"
+SRCREV = "2745435c8016b31ab6b1eb7b3d48295f51fd9aa4"
 S = "${WORKDIR}/git"
 COMPATIBLE_MACHINE = "^formuler3$"
 DEPENDS = "ni-libstb-hal ni-openthreads libdvbsi++ libsigc++-2.0 \
@@ -27,11 +27,10 @@ EXTRA_OECONF = "--enable-dependency-tracking --with-target=cdk --with-targetpref
     --with-stb-hal-build=${STAGING_LIBDIR} \
     --disable-mips-acc --disable-change-osd-resolution \
     --disable-pip --enable-lua --with-lua-provider=lua --disable-graphlcd --disable-lcd4linux \
-    --disable-ni-web --disable-api-doc --disable-legacy-api --disable-mcp \
+    --enable-ni-web --disable-api-doc --disable-legacy-api --disable-mcp \
     --enable-fribidi --enable-pugixml --enable-giflib --enable-ffmpegdec \
     --with-network-backend=ifupdown --without-debug"
 
-# libmicrohttpd is needed even with --disable-ni-web: upstream builds the archive.
 # Lua is enabled for plugins, the Lua server and WebTV stream scripts.
 RDEPENDS:${PN}:append = " lua luaposix"
 # OE-Core Lua is static; expose its API to loadable modules such as luaposix.
