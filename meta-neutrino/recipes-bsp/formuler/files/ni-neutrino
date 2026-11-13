@@ -5,7 +5,7 @@
 # Required-Stop:     $local_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: NI Neutrino development service for Formuler F3
+# Short-Description: NI Neutrino development service for Formuler
 ### END INIT INFO
 PIDFILE=/run/ni-neutrino-supervisor.pid
 NI_LOGFILE=/var/log/ni-neutrino.log

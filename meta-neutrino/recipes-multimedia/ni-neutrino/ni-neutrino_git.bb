@@ -13,7 +13,8 @@ SRC_URI = "git://github.com/sid8796/ni-neutrino.git;protocol=https;branch=formul
            file://0008-luaserver-without-lua-backend.patch"
 SRCREV = "a1c386e19957344fecebecb601f3737170853b8a"
 S = "${WORKDIR}/git"
-COMPATIBLE_MACHINE = "^formuler3$"
+COMPATIBLE_MACHINE = "^(formuler1|formuler3|formuler4|formuler4turbo)$"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 DEPENDS = "ni-libstb-hal ni-openthreads libdvbsi++ libsigc++-2.0 \
            curl freetype libpng jpeg giflib zlib fribidi pugixml ffmpeg \
            libass openssl libmicrohttpd lua gettext-native"
@@ -22,7 +23,7 @@ inherit autotools pkgconfig gettext
 
 # Core API validates transitive includes using Automake dependency files.
 EXTRA_OECONF = "--enable-dependency-tracking --with-target=cdk --with-targetprefix=/usr \
-    --with-boxtype=mipsbox --with-boxmodel=formuler3 \
+    --with-boxtype=mipsbox --with-boxmodel=${MACHINE} \
     --with-stb-hal-includes=${STAGING_INCDIR}/ni-hal/include \
     --with-stb-hal-build=${STAGING_LIBDIR} \
     --disable-mips-acc --disable-change-osd-resolution \

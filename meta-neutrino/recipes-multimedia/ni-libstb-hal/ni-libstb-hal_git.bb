@@ -1,4 +1,4 @@
-SUMMARY = "NI hardware abstraction library with Formuler F3 bring-up profile"
+SUMMARY = "NI hardware abstraction library for Formuler receivers"
 HOMEPAGE = "https://github.com/neutrino-images/ni-libstb-hal"
 LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
@@ -7,13 +7,14 @@ PR = "r1"
 SRC_URI = "git://github.com/sid8796/ni-libstb-hal.git;protocol=https;branch=formuler3"
 SRCREV = "347bf1dd3dd306f2ca3f4808fded11b5df47cda9"
 S = "${WORKDIR}/git"
-COMPATIBLE_MACHINE = "^formuler3$"
+COMPATIBLE_MACHINE = "^(formuler1|formuler3|formuler4|formuler4turbo)$"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 DEPENDS = "ffmpeg ni-openthreads libass libpng zlib"
 
 inherit autotools pkgconfig
 
 EXTRA_OECONF = "--with-target=cdk --with-targetprefix=/usr \
-                --with-boxtype=mipsbox --with-boxmodel=formuler3 \
+                --with-boxtype=mipsbox --with-boxmodel=${MACHINE} \
                 --disable-shared --enable-static --disable-gstreamer --without-debug"
 # Match NI's static HAL linkage. The GUI resolves its FFmpeg/PNG/ASS dependencies.
 do_install:append() {

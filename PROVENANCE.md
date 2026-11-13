@@ -4,7 +4,9 @@ Vendor metadata was selected from OpenPLi/openpli-oe-core at
 47e156fabcc3555dde753a111ab06740824f2e2d, based on the verified Formuler F3
 image dependency graph. Upstream recipe/file copyright and license notices
 are retained. Generic recipes/classes now reside in meta-neutrino; the only
-vendor BSP is meta-formuler, restricted to Formuler F3 / Linux 4.10.6.
+vendor BSP is meta-formuler for Formuler F1, F3, F4 and F4 Turbo with Linux
+4.10.6. The machine configurations and driver recipes for the additional models
+come from the same OpenPLi revision.
 NI GUI/HAL remain pinned external source repositories, suitable for later forks.
 The submodules retain the exact revisions of the successful original build.
 

@@ -3,6 +3,7 @@ import argparse,json,os,subprocess
 from pathlib import Path
 p=argparse.ArgumentParser()
 p.add_argument('--build-dir',default='build');p.add_argument('--downloads');p.add_argument('--sstate');p.add_argument('--jobs',type=int)
+p.add_argument('--machine', choices=('formuler1', 'formuler3', 'formuler4', 'formuler4turbo'), default='formuler3')
 a=p.parse_args();root=Path(__file__).resolve().parent.parent
 for name,data in json.loads((root/'sources.lock.json').read_text()).items():
     if name not in ('bitbake','openembedded-core','meta-openembedded'):continue
@@ -14,7 +15,7 @@ layers=['openembedded-core/meta','meta-openembedded/meta-oe','meta-openembedded/
 (conf/'bblayers.conf').write_text('LCONF_VERSION = "7"\nBBPATH = "${TOPDIR}"\nBBFILES = ""\nBBLAYERS = "'+' '.join(str(root/x) for x in layers)+'"\n')
 cpus=os.cpu_count() or 1;memory=os.sysconf('SC_PAGE_SIZE')*os.sysconf('SC_PHYS_PAGES')
 jobs=a.jobs or max(1,min(cpus,memory//(3*1024**3)))
-s='MACHINE = "formuler3"\nDISTRO = "formuler3-ni"\nPACKAGE_CLASSES = "package_ipk"\nCONF_VERSION = "2"\n'
+s=f'MACHINE = "{a.machine}"\nDISTRO = "formuler3-ni"\nPACKAGE_CLASSES = "package_ipk"\nCONF_VERSION = "2"\n'
 s+=f'BB_NUMBER_THREADS = "{jobs}"\nPARALLEL_MAKE = "-j {cpus}"\n'
 s+='INHERIT:remove = "rm_work"\nBB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},10G,100K STOPTASKS,${DL_DIR},10G,100K"\n'
 for name,value in [('DL_DIR',a.downloads),('SSTATE_DIR',a.sstate)]:
@@ -23,4 +24,4 @@ for name,value in [('DL_DIR',a.downloads),('SSTATE_DIR',a.sstate)]:
         if any(c in path for c in '\n\r"'):raise SystemExit('Invalid cache path')
         s+=f'{name} = "{path}"\n'
 (conf/'local.conf').write_text(s)
-print('Prepared:',build);print('Next: source scripts/env.sh '+str(build));print('Then: bitbake -p; bitbake ni-formuler3-image')
+print('Prepared:',build);print('Next: source scripts/env.sh '+str(build));print('Then: bitbake -p; bitbake ni-formuler-image')

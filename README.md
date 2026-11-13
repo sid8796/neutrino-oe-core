@@ -1,7 +1,7 @@
 # neutrino-oe-core
 
-Самостоятельная сборка NI Neutrino для Formuler F3 (BCM7362, MIPS)
-на Yocto Scarthgap. Проект находится на стадии аппаратной адаптации.
+Самостоятельная сборка NI Neutrino для Formuler F1, F3, F4 и F4 Turbo
+на Yocto Scarthgap. Аппаратная адаптация проверялась на F3.
 
 ## Три репозитория проекта
 
@@ -24,7 +24,7 @@ GUI и HAL являются настоящими форками neutrino-images 
 bitbake/                 # закреплённый подмодуль
 openembedded-core/       # закреплённый подмодуль
 meta-openembedded/       # закреплённый подмодуль; выбранные слои библиотек
-meta-formuler/           # единственный BSP производителя, только formuler3
+meta-formuler/           # BSP для четырёх моделей Formuler
 meta-neutrino/           # GUI/HAL-рецепты, общие зависимости, distro и образ
 meta-softcams/           # необязательные рецепты OSCam-Emu и CCcam
 scripts/
@@ -44,16 +44,21 @@ libacl1, libssl-dev, zip, gettext, subversion, default-jre-headless.
 ```sh
 git clone --recurse-submodules https://github.com/sid8796/neutrino-oe-core.git
 cd neutrino-oe-core
-python3 scripts/setup.py --build-dir "$HOME/neutrino-build"
+python3 scripts/setup.py --machine formuler3 --build-dir "$HOME/neutrino-build"
 source scripts/env.sh "$HOME/neutrino-build"
 bitbake -p
-bitbake ni-formuler3-image
+bitbake ni-formuler-image
 ```
 
 setup.py определяет CPU/RAM и ограничивает параллельные задачи по памяти.
 Для повторного использования кэша укажите --downloads и --sstate.
-USB ZIP находится в выбранном build-dir под tmp/deploy/.../images/formuler3/.
-Проверка: python3 scripts/check_deploy.py /путь/к/архиву.zip.
+Для другой модели укажите `--machine formuler1`, `--machine formuler4` или
+`--machine formuler4turbo` и используйте отдельный каталог сборки.
+Существующий каталог можно настроить через `MACHINE` в `conf/local.conf`.
+Цель `ni-formuler3-image` также доступна при `MACHINE = "formuler3"`.
+
+USB ZIP находится в `tmp/deploy/images/<MACHINE>/`. Для проверки ZIP на F3
+используйте `python3 scripts/check_deploy.py /путь/к/архиву.zip`.
 
 В образе: Linux 4.10.6, vendor DVB-модули, NI GUI/HAL, Lua, частичная
 русская локаль и шрифты, 88x2bu, Wi-Fi hooks, serial getty и SSH/SFTP.
@@ -87,7 +92,7 @@ sources.lock.json. Затем проверьте оставшиеся внешн
 
 ## Softcam
 
-OSCam-Emu и CCcam входят в образ `ni-formuler3-image` вместе с зависимостями.
+OSCam-Emu и CCcam входят в образ `ni-formuler-image` вместе с зависимостями.
 Собрать IPK отдельно можно следующими командами.
 
 ```sh

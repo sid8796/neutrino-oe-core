@@ -22,18 +22,26 @@ report_failure() {
 trap report_failure 0
 model=$(cat /proc/stb/info/model 2>/dev/null || true)
 log_step "Supervisor starting; model=${model:-unknown}; kernel=$(uname -r)"
-if [ "$model" != formuler3 ]; then
-    log_step 'This service is for Formuler F3 only.'
-    exit 1
-fi
+case "$model" in
+    formuler1|formuler3|formuler4)
+        modules="${model}_1 ${model}_2 ${model}_3 ${model}_4"
+        ;;
+    formuler4turbo)
+        modules="${model}_dvb"
+        ;;
+    *)
+        log_step "Unsupported Formuler model: ${model:-unknown}"
+        exit 1
+        ;;
+esac
 if pidof enigma2 >/dev/null 2>&1; then
     log_step 'Enigma2 is running; refusing to share DVB and framebuffer devices.'
     exit 1
 fi
 # Preserve the vendor module order; do not force-load or unload modules.
-for module in formuler3_1 formuler3_2 formuler3_3 formuler3_4; do
+for module in $modules; do
     loaded_name=$module
-    if [ "$module" = formuler3_4 ]; then loaded_name=formuler3; fi
+    if [ "$module" = "${model}_4" ]; then loaded_name=$model; fi
     if [ -d "/sys/module/$loaded_name" ]; then continue; fi
     if ! modprobe "$module"; then
         log_step "Module $module failed to load. Inspect dmesg before continuing."

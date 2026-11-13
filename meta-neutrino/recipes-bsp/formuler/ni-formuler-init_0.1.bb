@@ -1,10 +1,14 @@
-SUMMARY = "Formuler F3 NI development boot integration"
+SUMMARY = "Neutrino boot integration for Formuler receivers"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 SRC_URI = "file://ni-neutrino file://ni-neutrino-run \
            file://ni-wifi-ifupdown file://pre-wlan0.sh file://post-wlan0.sh"
 S = "${WORKDIR}"
-COMPATIBLE_MACHINE = "^formuler3$"
+COMPATIBLE_MACHINE = "^(formuler1|formuler3|formuler4|formuler4turbo)$"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+RPROVIDES:${PN} = "ni-formuler3-init"
+RREPLACES:${PN} = "ni-formuler3-init"
+RCONFLICTS:${PN} = "ni-formuler3-init"
 inherit update-rc.d
 INITSCRIPT_NAME = "ni-neutrino"
 INITSCRIPT_PARAMS = "defaults 95 05"
