@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/sid8796/ni-neutrino.git;protocol=https;branch=formul
            file://0006-movieplayer-without-lua-backend.patch \
            file://0007-plugins-without-lua-backend.patch \
            file://0008-luaserver-without-lua-backend.patch"
-SRCREV = "5b629f4d04c9f8700bfa9d2908b157a6663e8a18"
+SRCREV = "9df2a4c672fe59c829b4c0745a2ca498a35ae598"
 S = "${WORKDIR}/git"
 COMPATIBLE_MACHINE = "^formuler3$"
 DEPENDS = "ni-libstb-hal ni-openthreads libdvbsi++ libsigc++-2.0 \

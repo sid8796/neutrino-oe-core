@@ -61,7 +61,6 @@ done
 mkdir -p /var/tuxbox/config/zapit /var/tuxbox/plugins /media/hdd /tmp
 export NEUTRINO_EXIT_CODES=posix
 export NEUTRINO_EXIT_ACTION_FILE=/run/neutrino.exit-action
-rm -f "$NEUTRINO_EXIT_ACTION_FILE"
 child=''
 stop_child() {
     if [ -n "$child" ]; then
@@ -71,26 +70,37 @@ stop_child() {
     exit 0
 }
 trap stop_child INT TERM
-if [ "${NI_SERIAL_LOG:-1}" = 1 ] && [ -c /dev/console ]; then
-    log_step 'Devices ready; launching Neutrino with application output on the serial console.'
-    /usr/bin/neutrino >/dev/console 2>&1 &
-else
-    log_step 'Devices ready; launching Neutrino with application output in the service log.'
-    /usr/bin/neutrino &
-fi
-child=$!
-rc=0
-wait "$child" || rc=$?
-child=''
-log_step "Neutrino exited: status=$rc"
-if [ -r "$NEUTRINO_EXIT_ACTION_FILE" ]; then
-    action=$(cat "$NEUTRINO_EXIT_ACTION_FILE")
+while :; do
     rm -f "$NEUTRINO_EXIT_ACTION_FILE"
-    log_step "Requested action: $action"
-    if [ "$rc" -eq 0 ] && [ "$action" = reboot ]; then
-        log_step 'Rebooting via SysV init'
-        sync
-        /sbin/reboot
+    if [ "${NI_SERIAL_LOG:-1}" = 1 ] && [ -c /dev/console ]; then
+        log_step 'Devices ready; launching Neutrino with application output on the serial console.'
+        /usr/bin/neutrino >/dev/console 2>&1 &
+    else
+        log_step 'Devices ready; launching Neutrino with application output in the service log.'
+        /usr/bin/neutrino &
     fi
-fi
-exit "$rc"
+    child=$!
+    rc=0
+    wait "$child" || rc=$?
+    child=''
+    log_step "Neutrino exited: status=$rc"
+    if [ -r "$NEUTRINO_EXIT_ACTION_FILE" ]; then
+        action=$(cat "$NEUTRINO_EXIT_ACTION_FILE")
+        rm -f "$NEUTRINO_EXIT_ACTION_FILE"
+        log_step "Requested action: $action"
+        if [ "$rc" -eq 0 ]; then
+            case "$action" in
+                restart)
+                    log_step 'Restarting Neutrino GUI'
+                    continue
+                    ;;
+                reboot)
+                    log_step 'Rebooting via SysV init'
+                    sync
+                    /sbin/reboot
+                    ;;
+            esac
+        fi
+    fi
+    exit "$rc"
+done
