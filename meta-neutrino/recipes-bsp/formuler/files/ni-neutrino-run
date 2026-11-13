@@ -102,6 +102,11 @@ while :; do
                     log_step 'Restarting Neutrino GUI'
                     continue
                     ;;
+                poweroff)
+                    log_step 'Powering off via SysV init'
+                    sync
+                    /sbin/poweroff
+                    ;;
                 reboot)
                     log_step 'Rebooting via SysV init'
                     sync
