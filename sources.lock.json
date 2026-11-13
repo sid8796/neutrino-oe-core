@@ -2,7 +2,7 @@
   "ni-neutrino": {
     "url": "https://github.com/sid8796/ni-neutrino.git",
     "branch": "formuler3",
-    "rev": "9df2a4c672fe59c829b4c0745a2ca498a35ae598",
+    "rev": "a94b71d7f8398ffe9f213c86ab5be6892f2853d7",
     "upstream_url": "https://github.com/neutrino-images/ni-neutrino.git",
     "upstream_base": "532eb9b316b3ff1b0b3f72846dc59f2e80312142"
   },
