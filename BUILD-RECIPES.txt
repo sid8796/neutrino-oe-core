@@ -17,7 +17,7 @@ depmodwrapper-cross
 packagegroup-core-boot
 packagegroup-base
 ni-neutrino
-ni-formuler3-init
+ni-formuler-init
 ca-certificates
 kmod
 init-ifupdown

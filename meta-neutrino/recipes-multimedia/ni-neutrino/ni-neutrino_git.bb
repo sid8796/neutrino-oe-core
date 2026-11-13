@@ -11,7 +11,7 @@ SRC_URI = "git://github.com/sid8796/ni-neutrino.git;protocol=https;branch=formul
            file://0006-movieplayer-without-lua-backend.patch \
            file://0007-plugins-without-lua-backend.patch \
            file://0008-luaserver-without-lua-backend.patch"
-SRCREV = "a1c386e19957344fecebecb601f3737170853b8a"
+SRCREV = "519f05cbd7ec4a58c2868cef9b489462fd480798"
 S = "${WORKDIR}/git"
 COMPATIBLE_MACHINE = "^(formuler1|formuler3|formuler4|formuler4turbo)$"
 PACKAGE_ARCH = "${MACHINE_ARCH}"

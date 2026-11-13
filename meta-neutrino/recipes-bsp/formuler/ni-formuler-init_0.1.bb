@@ -6,9 +6,6 @@ SRC_URI = "file://ni-neutrino file://ni-neutrino-run \
 S = "${WORKDIR}"
 COMPATIBLE_MACHINE = "^(formuler1|formuler3|formuler4|formuler4turbo)$"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-RPROVIDES:${PN} = "ni-formuler3-init"
-RREPLACES:${PN} = "ni-formuler3-init"
-RCONFLICTS:${PN} = "ni-formuler3-init"
 inherit update-rc.d
 INITSCRIPT_NAME = "ni-neutrino"
 INITSCRIPT_PARAMS = "defaults 95 05"
