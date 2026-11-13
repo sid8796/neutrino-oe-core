@@ -9,7 +9,7 @@
   "ni-libstb-hal": {
     "url": "https://github.com/sid8796/ni-libstb-hal.git",
     "branch": "formuler3",
-    "rev": "3e06251c1756c448962dfc411aab4f149ec9b8b7",
+    "rev": "d8f516892df261fd599142564ca095581abf36c0",
     "upstream_url": "https://github.com/neutrino-images/ni-libstb-hal.git",
     "upstream_base": "f9bb4b41497ee9a1f4c24267c625caf7fee71f56"
   },
