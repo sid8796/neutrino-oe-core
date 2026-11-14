@@ -1,0 +1,126 @@
+#!/bin/sh
+set -eu
+state=/run/ni-wifi-boot
+interfaces=/etc/network/interfaces
+
+log() {
+    read -r uptime _ </proc/uptime
+    printf '[ni-wifi-boot %s] %s\n' "$uptime" "$*"
+}
+
+automatic() {
+    awk -v iface="$1" '$1=="auto" {
+        for(i=2;i<=NF && $i !~ /^#/;i++) if($i==iface) found=1
+    } END {exit !found}' "$interfaces"
+}
+
+managed() {
+    automatic "$1" && [ ! -e "$state/$1.manual" ]
+}
+
+connected() {
+    wpa_cli -i wlan0 status 2>/dev/null | grep -qx 'wpa_state=COMPLETED'
+}
+
+configure() (
+    iface=$1
+    flock -x 9
+    managed "$iface" || exit 0
+    case "$iface" in
+        wlan0) connected || exit 1 ;;
+        eth0) [ "$(cat /sys/class/net/eth0/carrier 2>/dev/null || :)" = 1 ] || exit 1 ;;
+    esac
+    if ! ip -4 addr show dev "$iface" | grep -q 'inet '; then
+        log "$iface: link ready, running ifup"
+        /sbin/ifup -i "$state/interfaces-event" "$iface" 9>&- || exit 1
+        ip -4 addr show dev "$iface" | grep -q 'inet ' || exit 1
+    fi
+    log "$iface: IPv4 configured"
+) 9>"$state/ifup.lock"
+
+case "${1:-}" in
+    wlan0)
+        case "${2:-}" in
+            CONNECTED) touch "$state/wlan0.connected" ;;
+            DISCONNECTED) rm -f "$state/wlan0.connected" ;;
+        esac
+        ;;
+    wifi)
+        listener=''
+        cleanup_wifi() {
+            if [ -n "$listener" ]; then kill "$listener" 2>/dev/null || :; fi
+            touch "$state/wlan0.boot-complete"
+        }
+        trap cleanup_wifi EXIT
+        trap 'exit 0' HUP INT TERM
+        until [ -e /sys/class/net/wlan0 ]; do
+            managed wlan0 || exit 0
+            sleep 2
+        done
+        managed wlan0 || exit 0
+        log 'wlan0: starting wpa_supplicant'
+        IFACE=wlan0 /usr/sbin/ni-wifi-ifupdown start
+        wpa_cli -i wlan0 -B -P "$state/wpa-cli.pid" -a "$0"
+        listener=$(cat "$state/wpa-cli.pid")
+        if connected; then touch "$state/wlan0.connected"; fi
+        while managed wlan0 && [ -e /sys/class/net/wlan0 ]; do
+            if [ -e "$state/wlan0.connected" ] && connected; then
+                log 'wlan0: CONNECTED'
+                if configure wlan0; then exit 0; fi
+                log 'wlan0: IPv4 setup failed, retrying in 5s'
+                sleep 5
+            else
+                sleep 2
+            fi
+        done
+        ;;
+    lan)
+        trap 'touch "$state/eth0.boot-complete"' EXIT
+        trap 'exit 0' HUP INT TERM
+        announced=0
+        armed=0
+        while managed eth0; do
+            if [ -e /sys/class/net/eth0 ]; then
+                if [ "$armed" -eq 0 ]; then
+                    if ! ip link set dev eth0 up; then sleep 2; continue; fi
+                    armed=1
+                fi
+                if [ "$(cat /sys/class/net/eth0/carrier 2>/dev/null || :)" = 1 ]; then
+                    if configure eth0; then exit 0; fi
+                    log 'eth0: IPv4 setup failed, retrying in 5s'
+                    sleep 5
+                    continue
+                fi
+                if [ "$announced" -eq 0 ]; then
+                    log 'eth0: no carrier, waiting in background'
+                    announced=1
+                fi
+            else
+                armed=0
+            fi
+            sleep 2
+        done
+        ;;
+    start)
+        mkdir -p -m 700 "$state"
+        umask 077
+        awk '$1=="auto" { out=$1; for(i=2;i<=NF && $i !~ /^#/;i++) if($i!="wlan0" && $i!="eth0") out=out " " $i; if(out!=$1) print out; next } {print}' \
+            "$interfaces" >"$state/interfaces-base"
+        awk '$1=="iface" {wlan=($2=="wlan0")} wlan && $1=="pre-up" && $2=="/etc/network/pre-wlan0.sh" {next} {print}' \
+            "$interfaces" >"$state/interfaces-event"
+        if /sbin/ifup -i "$state/interfaces-base" -a; then rc=0; else rc=$?; fi
+        if automatic wlan0 && grep -q '^[[:space:]]*network[[:space:]]*=' /etc/wpa_supplicant.conf 2>/dev/null; then
+            "$0" wifi </dev/null >/dev/console 2>&1 &
+        else
+            touch "$state/wlan0.boot-complete"
+        fi
+        if automatic eth0; then
+            "$0" lan </dev/null >/dev/console 2>&1 &
+        else
+            touch "$state/eth0.boot-complete"
+        fi
+        exit "$rc"
+        ;;
+    *) exit 2 ;;
+esac
+
